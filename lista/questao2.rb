@@ -7,7 +7,6 @@ def printaMatriz(matriz)
 	for elemento in matriz
 		print elemento
 		print "\n"
-
 	end
 end
 
