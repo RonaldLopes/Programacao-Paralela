@@ -3,7 +3,7 @@
 def criaVetor(tamanho=20)
 	vetor = Array.new(tamanho) { 0 }
 	for i in 0..tamanho-1
-		vetor[i]= Random.rand(1..20)
+		vetor[i]= Random.rand(2..30)
 	end
 	return vetor
 end
