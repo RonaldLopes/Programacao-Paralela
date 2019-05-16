@@ -1,5 +1,5 @@
 #Questao 4
-def criaVetor(tamanho=30)
+def criaVetor(tamanho=10)
 	vetor = Array.new(tamanho) { 0 }
 	for i in 0..tamanho-1
 		vetor[i]= Random.rand(0..1000)
@@ -21,7 +21,6 @@ end
 
 # vetor = 30.times.map{Random.rand(0..1000)}
 vetor = criaVetor 
-print vetor
+puts "Vetor Original: #{vetor}"
 ordenaVetor vetor
-print "\n"
-print vetor
+puts "Vetor final: #{vetor}"

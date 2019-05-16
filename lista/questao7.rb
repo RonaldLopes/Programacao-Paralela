@@ -31,7 +31,7 @@ def verificaNumeroComposto(numero)
 			numeroDivisoes = numeroDivisoes +1 
 		end
 	end
-	(numeroDivisoes>2) ? (return true) : (return false)
+	(numeroDivisoes > 2) ? (return true) : (return false)
 end
 
 

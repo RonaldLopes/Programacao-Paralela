@@ -8,5 +8,6 @@ def fatorial(valor)
 
 	return valor * fatorial(valor-1)
 end
+print "Digite um numero: "
 
-puts fatorial 5
+puts fatorial gets.to_i 
