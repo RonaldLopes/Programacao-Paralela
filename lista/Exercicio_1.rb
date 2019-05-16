@@ -1,27 +1,29 @@
-# #Input das dimensões das Matrizes
-puts "Digite o número de linhas da Matriz A:"
+#Input das dimensões das Matrizes
+#puts "Digite o número de linhas da Matriz A:"
 linha = 4 #gets.to_i
-puts "Digite o número de colunas da sua Matriz A:"
+#puts "Digite o número de colunas da Matriz A:"
 coluna = 5 #gets.to_i
 
 #Criação das Matrizes
 matriz = Array.new(linha) {Array.new(coluna)}
 
 #Matriz teste
-#matriz = [[15, 2, 1, 1, 1],[1, 1, 1, 1, 1],[1, 1, 1, 1, 1],[1, 1, 1, 1, 1]]
+#matriz = [[1, 1, 1, 1, 1],[1, 1, 1, 1, 1],[1, 1, 1, 1, 1],[1, 1, 1, 1, 1]]
 
-#Preenchimento das Matrizes
-for i in (0..linha-1)
-	for j in (0..coluna-1)
-		matriz[i][j] = rand(20)+1
+def preenche_matriz(matriz,linha,coluna)
+	for i in (0..linha-1)
+		for j in (0..coluna-1)
+			matriz[i][j] = rand(20)+1
+		end
 	end
 end
 
-#Impressão das Matrizes
-puts "Matriz A #{linha}x#{coluna}"
-for i in (0..linha-1)
-	print matriz[i]
-	print "\n"
+def imprime_matriz (matriz,linha,coluna)
+	puts "Matriz A #{linha}x#{coluna}"
+	for i in (0..linha-1)
+		print matriz[i]
+		print "\n"
+	end
 end
 
 def verifica_condicao (matriz, linha, coluna)
@@ -56,6 +58,8 @@ def verifica_condicao (matriz, linha, coluna)
 	end
 end
 
+preenche_matriz(matriz,linha,coluna)
+imprime_matriz(matriz,linha,coluna)
 resposta = verifica_condicao(matriz, linha, coluna)
 
 puts resposta
