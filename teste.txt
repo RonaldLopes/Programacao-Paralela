@@ -1,0 +1,6 @@
+Updating 7fa7962..2747d02
+Fast-forward
+ lista/Exercicio_1.rb | 30 +++++++++++++++++-------------
+ lista/Exercicio_3.rb | 30 ++++++++++++++----------------
+ 2 files changed, 31 insertions(+), 29 deletions(-)
+Already up to date.

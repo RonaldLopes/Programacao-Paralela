@@ -35,6 +35,6 @@ def verificaNumeroComposto(numero)
 end
 
 
-v = criaVetor
-ordenaNumerosCompostos v 
+v = [2, 3,  4 , 8,  7 ]
+ordenaNumerosCompostos v
 puts "Vetor: #{v}"
