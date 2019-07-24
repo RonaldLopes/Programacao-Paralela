@@ -10,8 +10,9 @@ def printRed(tempoDormir,n,mutex,cv)
     mutex.synchronize do
         n.times do
             cv.signal
-            print("Vermelho !!! dormindo por #{tempoDormir} segundos....\n")
             sleep(tempoDormir)
+            print("Vermelho !!! dormi por #{tempoDormir} segundos....\n")
+            
             cv.wait(mutex)
         end
     end
@@ -24,8 +25,9 @@ def printYellow(tempoDormir,n,mutex,cv)
     mutex.synchronize do
         n.times do
             cv.signal
-            print "Amarelo !!! dormindo por #{tempoDormir} segundos....\n"
-            sleep(tempoDormir) 
+            sleep(tempoDormir)
+            print "Amarelo !!! dormi por #{tempoDormir} segundos....\n"
+             
             cv.wait(mutex)          
         end
     end
@@ -38,8 +40,9 @@ def printGreen(tempoDormir,n,mutex,cv)
     mutex.synchronize do
         n.times do
             cv.signal
-            print "Verde !!! dormindo por #{tempoDormir} segundos....\n"
             sleep(tempoDormir)
+            print "Verde !!! dormi por #{tempoDormir} segundos....\n"
+            
             cv.wait(mutex)
         end
     end
