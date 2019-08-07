@@ -1,70 +1,66 @@
 #!/usr/bin/ruby
 require 'thread'
-mutex = Mutex.new
+mutexVermelho = Mutex.new
+mutexVerde = Mutex.new
+mutexAmarelo = Mutex.new
+
 resource = ConditionVariable.new
 
-def printRed(tempoDormir,n,mutex,cv)
-    Thread.current.priority=1
-    Thread.current.name ="Red"
-    
-    mutex.synchronize do
+# cvVermelho = ConditionVariable.new
+# cvAmarelo = ConditionVariable.new
+# cvVerde = ConditionVariable.new
+
+def printRed(tempoDormir,n,proximoSinal,mutexAtual,cv)
+    mutexAtual.synchronize do
         n.times do
-            cv.signal
+            # cv.signal
             sleep(tempoDormir)
-            print("Vermelho !!! dormi por #{tempoDormir} segundos....\n")
             
-            cv.wait(mutex)
+            print("Vermelho !!! dormi por #{tempoDormir} segundos....\n")
+            # cv.wait(mutexAtual)
+            cv.signal
+            cv.wait(mutexAtual)
+            
+            
+            
         end
     end
     
 end
-def printYellow(tempoDormir,n,mutex,cv)
+def printYellow(tempoDormir,n,proximoSinal,mutexAtual,cv)
     
-    Thread.current.name="Yellow"
-    Thread.current.priority=2
-    mutex.synchronize do
+    mutexAtual.synchronize do
         n.times do
-            cv.signal
+            # cv.signal
+            cv.wait(mutexAtual)
             sleep(tempoDormir)
             print "Amarelo !!! dormi por #{tempoDormir} segundos....\n"
-             
-            cv.wait(mutex)          
+            cv.signal
+            # cv.wait(mutexAtual)
+            # 
+            # cv.wait(proximoSinal)  
         end
     end
     
 end
-def printGreen(tempoDormir,n,mutex,cv)
-    
-    Thread.current.name ="Verde"
-    Thread.current.priority=3
-    mutex.synchronize do
+def printGreen(tempoDormir,n,proximoSinal,mutexAtual,cv)
+    mutexAtual.synchronize do
         n.times do
-            cv.signal
+            
+            cv.wait(mutexAtual)
             sleep(tempoDormir)
             print "Verde !!! dormi por #{tempoDormir} segundos....\n"
+            # print ">>>>>>>>>>>>>>>>>>>>>>>>>>\n"
+            cv.signal
             
-            cv.wait(mutex)
         end
     end
-   
 end
 puts "Informe o numero de repetições: "
 repeticao = gets.to_i
-
 thread = []
-mutex.synchronize do
-    thread << Thread.new{ Thread.stop;printRed(Random.rand(1..10),repeticao,mutex,resource)}
-    thread << Thread.new{  Thread.stop;printYellow(Random.rand(1..10),repeticao,mutex,resource)}
-    thread << Thread.new{  Thread.stop;printGreen(Random.rand(1..10),repeticao,mutex,resource)}
-end
-# thread[0].run
-sleep(1)
-thread.each do |t|
-    t.run
-#    sleep(1)
-end
-thread[0].join
+thread << Thread.new{ printRed(Random.rand(1..3),repeticao,mutexAmarelo,mutexVermelho,resource)}
+thread << Thread.new{ printYellow(Random.rand(1..3),repeticao,mutexVerde,mutexAmarelo,resource)}
+thread << Thread.new{ printGreen(Random.rand(1..3),repeticao,mutexVermelho,mutexVerde,resource)}
 
-# mutex.synchronize do
-#     resource.signal
-#     th
+thread.each &:join
