@@ -6,6 +6,15 @@ mutexSomatorio = Mutex.new
 resource = ConditionVariable.new
 queue = Queue.new
 
+def verifica (matrixCoeficiente)
+    (matrixCoeficiente.length-1).times do |i| 
+        if matrixCoeficiente[i][i] == 0
+            return false
+        end
+    end
+    return true
+end
+
 def calculaIcognita(matrixIcognita,matrixCoeficiente,matrixResultado,mutexIcognita,cv,queue)
     mutexIcognita.synchronize do
         (0..(matrixIcognita.length-1)).reverse_each do |i|
@@ -37,17 +46,15 @@ def calculaSomatorio(matrixCoeficiente,matrixIcognita,mutexSoma,cv,queue)
     end
 end
 
-matrixCoeficiente = [[1.0,2.0,3.0],[0.0,4.0,5.0],[0.0,0.0,6.0]]#[[1.0,2.0,2.0,4.0],[0.0,1.0,4.0,8.0],[0.0,0.0,2.0,4.0],[0.0,0.0,0.0,2.0]]#[[3,1,0],[0,2,-1],[0,0,3]] #[[1,2,3,4],[0,5,6,7],[0,0,8,9],[0,0,0,10]] #
-matrixIcognita = [0.0,0.0,0.0]
-matrixResultado =[14.0,23.0,18.0]# [10.0,4.0,8.0,10.0]#[4,2,0] #[5,4,4,2]#
-
-
-
+matrixCoeficiente = [[1.0,2.0,3.0,4.0],[0.0,5.0,6.0,7.0],[0.0,0.0,8.0,9.0],[0.0,0.0,0.0,10.0]]#[[1.0,2.0,2.0,4.0],[0.0,1.0,4.0,8.0],[0.0,0.0,2.0,4.0],[0.0,0.0,0.0,2.0]]#[[3,1,0],[0,2,-1],[0,0,3]] #[[1,2,3,4],[0,5,6,7],[0,0,8,9],[0,0,0,10]] #
+matrixIcognita = [0.0,0.0,0.0,0.0]
+matrixResultado = [5.0,4.0,4.0,2.0]#[10.0,4.0,8.0,10.0]#[4,2,0] #[5,4,4,2]#
 
 thread = []
-thread << Thread.new{calculaIcognita(matrixIcognita,matrixCoeficiente,matrixResultado,mutexIcognita,resource,queue)}
-
-thread << Thread.new{ calculaSomatorio(matrixCoeficiente,matrixIcognita,mutexSomatorio,resource,queue)}
-
-thread.each &:join
-
+if verifica(matrixCoeficiente)== false
+    puts "Sem solucao"
+else
+    thread << Thread.new{calculaIcognita(matrixIcognita,matrixCoeficiente,matrixResultado,mutexIcognita,resource,queue)}
+    thread << Thread.new{ calculaSomatorio(matrixCoeficiente,matrixIcognita,mutexSomatorio,resource,queue)}
+    thread.each &:join
+end
